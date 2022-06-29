@@ -2,6 +2,8 @@
 GHost++ Version 17.2
 ====================
 
+Forked project with some subtle changes to compile on newer Ubuntu distros
+
 GHost++ is a port of the original GHost project to C++. It was ported by Trevor Hogan.
 It contains many enhancements and fixes that were not present in the original GHost.
 You can compile and run GHost++ on Windows, Linux, and OS X with this release although the code should be mostly portable to other operating systems with only very minor changes.
