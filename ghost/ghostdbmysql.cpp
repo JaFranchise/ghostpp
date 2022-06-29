@@ -64,7 +64,7 @@ CGHostDBMySQL :: CGHostDBMySQL( CConfig *CFG ) : CGHostDB( CFG )
 		m_Error = "error initializing MySQL connection";
 		return;
 	}
-
+	typedef bool my_bool;
 	my_bool Reconnect = true;
 	mysql_options( Connection, MYSQL_OPT_RECONNECT, &Reconnect );
 
@@ -1158,7 +1158,7 @@ void CMySQLCallable :: Init( )
 	{
 		if( !( m_Connection = mysql_init( NULL ) ) )
 			m_Error = mysql_error( (MYSQL *)m_Connection );
-
+		typedef bool my_bool;
 		my_bool Reconnect = true;
 		mysql_options( (MYSQL *)m_Connection, MYSQL_OPT_RECONNECT, &Reconnect );
 
