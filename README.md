@@ -6,17 +6,19 @@ GHost++ For WC3 1.26a
 The newer forked versions of this bot do not work with 1.26a. This forked project has some subtle changes to the Makefile and code to compile on newer Ubuntu distros.
 
 Ubuntu 20.04 compile instructions (adapted from https://github.com/uakfdotb/ghostpp):
-
-sudo apt-get install -y git libboost-date-time-dev build-essential libboost-thread-dev libboost-system-dev libboost-filesystem-dev libgmp-dev zlib1g-dev libbz2-dev libmysql++-dev
-git clone https://github.com/uakfdotb/ghostpp
-cd ghostpp/bncsutil/src/bncsutil
-make
-make install
-cd ../../../StormLib/stormlib
-make
-make install
-cd ../../ghost
-make
+```
+  sudo apt-get install -y git libboost-date-time-dev build-essential libboost-thread-dev libboost-system-dev libboost-filesystem-dev libgmp-dev zlib1g-dev libbz2-dev libmysql++-dev
+  git clone https://github.com/uakfdotb/ghostpp
+  cd ghostpp/bncsutil/src/bncsutil
+  make
+  make install
+  cd ../../../StormLib/stormlib
+  make
+  make install
+  cd ../../ghost
+  make
+```
+The rest of the readme is from the fork.
 
 ====================
 GHost++ Version 17.2
