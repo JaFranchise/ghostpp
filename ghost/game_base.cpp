@@ -1458,6 +1458,11 @@ void CBaseGame :: EventPlayerDeleted( CGamePlayer *player )
 		// tell everyone about the player leaving
 
 		SendAll( m_Protocol->SEND_W3GS_PLAYERLEAVE_OTHERS( player->GetPID( ), player->GetLeftCode( ) ) );
+		//autohost update
+		if( m_AutoStartPlayers != 0 && player->GetLeftCode() == PLAYERLEAVE_LOBBY)
+		{
+			SendAllChat( m_GHost->m_Language->WaitingForPlayersBeforeAutoStart( UTIL_ToString( m_AutoStartPlayers ), UTIL_ToString( m_AutoStartPlayers - GetNumHumanPlayers( ) ) ) );
+		}
 	}
 
 	// set the replay's host PID and name to the last player to leave the game
@@ -2527,13 +2532,6 @@ void CBaseGame :: EventPlayerLeft( CGamePlayer *player, uint32_t reason )
 
 	if( reason == PLAYERLEAVE_GPROXY )
 		player->SetLeftReason( m_GHost->m_Language->WasUnrecoverablyDroppedFromGProxy( ) );
-	else if(reason == PLAYERLEAVE_LOBBY){
-		//send autostart message on leave
-		if( m_AutoStartPlayers != 0 && GetNumHumanPlayers( ) < m_AutoStartPlayers )
-		{
-			SendAllChat( m_GHost->m_Language->WaitingForPlayersBeforeAutoStart( UTIL_ToString( m_AutoStartPlayers ), UTIL_ToString( m_AutoStartPlayers - GetNumHumanPlayers( ) ) ) );
-		}
-	}
 	else
 		player->SetLeftReason( m_GHost->m_Language->HasLeftVoluntarily( ) );
 
