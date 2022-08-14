@@ -1339,9 +1339,18 @@ void CBaseGame :: SendWelcomeMessage( CGamePlayer *player )
 					SendChat( player, " " );
 			}
 			else
-				SendChat( player, Line );
-
-                        ++Count;
+			{
+				//replace gamename variable from motd
+				string needle = "{gameName}";
+				size_t index = 0;
+				while ((index = Line.find(needle, index)) != string::npos) {
+					Line.replace(index, needle.length(), m_GameName);
+					index += m_GameName.length();
+				}
+				//done
+				SendChat( player, Line);
+			}
+            ++Count;
 		}
 
 		in.close( );
