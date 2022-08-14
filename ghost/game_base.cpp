@@ -2022,6 +2022,12 @@ void CBaseGame :: EventPlayerJoined( CPotentialPlayer *potential, CIncomingJoinP
 
 	SendWelcomeMessage( Player );
 
+	//send autohost information on join instead of periodically
+	if( m_AutoStartPlayers != 0 && GetNumHumanPlayers( ) < m_AutoStartPlayers )
+		{
+			SendAllChat( m_GHost->m_Language->WaitingForPlayersBeforeAutoStart( UTIL_ToString( m_AutoStartPlayers ), UTIL_ToString( m_AutoStartPlayers - GetNumHumanPlayers( ) ) ) );
+		}
+
 	// if spoof checks are required and we won't automatically spoof check this player then tell them how to spoof check
 	// e.g. if automatic spoof checks are disabled, or if automatic spoof checks are done on admins only and this player isn't an admin
 
@@ -2521,6 +2527,13 @@ void CBaseGame :: EventPlayerLeft( CGamePlayer *player, uint32_t reason )
 
 	if( reason == PLAYERLEAVE_GPROXY )
 		player->SetLeftReason( m_GHost->m_Language->WasUnrecoverablyDroppedFromGProxy( ) );
+	else if(reason == PLAYERLEAVE_LOBBY){
+		//send autostart message on leave
+		if( m_AutoStartPlayers != 0 && GetNumHumanPlayers( ) < m_AutoStartPlayers )
+		{
+			SendAllChat( m_GHost->m_Language->WaitingForPlayersBeforeAutoStart( UTIL_ToString( m_AutoStartPlayers ), UTIL_ToString( m_AutoStartPlayers - GetNumHumanPlayers( ) ) ) );
+		}
+	}
 	else
 		player->SetLeftReason( m_GHost->m_Language->HasLeftVoluntarily( ) );
 
@@ -4445,7 +4458,7 @@ void CBaseGame :: StartCountDownAuto( bool requireSpoofChecks )
 
 		if( GetNumHumanPlayers( ) < m_AutoStartPlayers )
 		{
-			SendAllChat( m_GHost->m_Language->WaitingForPlayersBeforeAutoStart( UTIL_ToString( m_AutoStartPlayers ), UTIL_ToString( m_AutoStartPlayers - GetNumHumanPlayers( ) ) ) );
+			//SendAllChat( m_GHost->m_Language->WaitingForPlayersBeforeAutoStart( UTIL_ToString( m_AutoStartPlayers ), UTIL_ToString( m_AutoStartPlayers - GetNumHumanPlayers( ) ) ) );
 			return;
 		}
 
