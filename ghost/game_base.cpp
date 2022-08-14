@@ -1392,7 +1392,7 @@ void CBaseGame :: SendEndMessage( )
 
 void CBaseGame :: EventPlayerDeleted( CGamePlayer *player )
 {
-	CONSOLE_Print( "[GAME: " + m_GameName + "] deleting player [" + player->GetName( ) + "]: " + player->GetLeftReason( ) + " " + std::to_string(player->GetLeftCode()) );
+	CONSOLE_Print( "[GAME: " + m_GameName + "] deleting player [" + player->GetName( ) + "]: " + player->GetLeftReason( ));
 	// remove any queued spoofcheck messages for this player
 
 	if( player->GetWhoisSent( ) && !player->GetJoinedRealm( ).empty( ) && player->GetSpoofedRealm( ).empty( ) )
@@ -2541,6 +2541,12 @@ void CBaseGame :: EventPlayerLeft( CGamePlayer *player, uint32_t reason )
 
 	if( !m_GameLoading && !m_GameLoaded )
 		OpenSlot( GetSIDFromPID( player->GetPID( ) ), false );
+		//autohost update here instead of constant spam
+		if(m_AutoStartPlayers != 0)
+		{
+			SendAllChat( m_GHost->m_Language->WaitingForPlayersBeforeAutoStart( UTIL_ToString( m_AutoStartPlayers ), UTIL_ToString( m_AutoStartPlayers - GetNumHumanPlayers( ) ) ) );
+		}
+
 }
 
 void CBaseGame :: EventPlayerLoaded( CGamePlayer *player )
