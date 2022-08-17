@@ -2541,12 +2541,6 @@ void CBaseGame :: EventPlayerLeft( CGamePlayer *player, uint32_t reason )
 
 	if( !m_GameLoading && !m_GameLoaded )
 		OpenSlot( GetSIDFromPID( player->GetPID( ) ), false );
-		//autohost update here instead of constant spam
-		if(m_AutoStartPlayers != 0)
-		{
-			SendAllChat( m_GHost->m_Language->WaitingForPlayersBeforeAutoStart( UTIL_ToString( m_AutoStartPlayers ), UTIL_ToString( m_AutoStartPlayers - GetNumHumanPlayers( ) + 1 ) ) );
-		}
-
 }
 
 void CBaseGame :: EventPlayerLoaded( CGamePlayer *player )
