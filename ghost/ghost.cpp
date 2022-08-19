@@ -1665,6 +1665,8 @@ void CGHost :: CreateGame( CMap *map, unsigned char gameState, bool saveGame, st
 
         for( vector<CBNET *> :: iterator i = m_BNETs.begin( ); i != m_BNETs.end( ); ++i )
 	{
+		//send chat command to fix address translation (pvpgn)
+		(*i)->QueueChatCommand( "/rehash transfile" );
 		if( whisper && (*i)->GetServer( ) == creatorServer )
 		{
 			// note that we send this whisper only on the creator server
